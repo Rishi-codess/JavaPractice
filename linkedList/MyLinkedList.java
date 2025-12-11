@@ -151,27 +151,41 @@ public class MyLinkedList {
         return;
     }
 
-    public Node findMid(Node head){// helper function
-        Node slow = head;
-        Node fast = head;
-        while(fast != null && fast.next != null ){
-            slow = slow.next; //for +1
-            fast = fast.next.next; // for +2
-
-        }
-        return slow;  //slow is mid node
-    }
+//    public Node findMid(Node head){// helper function
+//        Node slow = head;
+//        Node fast = head;
+//        Node prevSlow = null;
+//
+//        while(fast != null && fast.next != null ){
+//            prevSlow = slow;
+//            slow = slow.next; //for +1
+//            fast = fast.next.next; // for +2
+//
+//        }
+//        return slow;  //slow is mid node
+//    }
     public boolean checkPalindrome(){
         if(head == null || head.next == null){
             return true;
         }
         //step1 - find mid
+        Node slow = head;
+        Node fast = head;
+        Node prevSlow = null;
 
-        Node Mid = findMid(head);
+        while(fast != null && fast.next != null ){
+            prevSlow = slow;
+            slow = slow.next; //for +1
+            fast = fast.next.next; // for +2
+
+        }
+        Node SecondHalfHead  = slow;
+        // split first half and second half
+        prevSlow.next = null;
         //step 2 reverse 2nd half of linked list
 
         Node prev = null;
-        Node curr = Mid;
+        Node curr = SecondHalfHead;
         Node next;
         while(curr!= null){
             next = curr.next;
@@ -183,15 +197,39 @@ public class MyLinkedList {
         Node right= prev;// right half head , required to sart checking from another half
 
         //step 3 - check left half and right half same or not
+        boolean isPalindrome = true;
         while(right != null){
             if(left.data != right.data){
-                return false;
+                isPalindrome = false;
+                break;
             }
             left = left.next ;
             right = right.next;
         }
+        // 4. (Optional) Restore the list to original form
 
-        return true;
+        // Reverse second half again
+        curr = prev; //prev since wahin se second half ka starting hota hai
+        prev = null;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        // Reconnect
+        prevSlow.next = prev; //ab prev wapas wohi end mei agaya so usko connect krdia
+
+        // 6) update tail (optional but keeps tail correct)
+        Node t = head;
+        Node last = null;
+        while (t != null) {
+            last = t;
+            t = t.next;
+        }
+        tail = last;
+        return isPalindrome;
     }
 
     public static void main(String[] args) {
@@ -224,6 +262,7 @@ public class MyLinkedList {
         Print();
         ll.deleteNthFromEnd(2);
         Print();
+
         System.out.println(ll.checkPalindrome());
         Print();
 
