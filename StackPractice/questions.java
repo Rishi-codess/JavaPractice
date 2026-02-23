@@ -25,7 +25,14 @@ public class questions {
         }
         return result.toString();
     }
-
+    public static void reverseStack(Stack<Integer> s){
+        if(s.isEmpty()){
+            return;
+        }
+        int top = s.pop();
+        reverseStack(s);
+        pushAtBottom(s,top);
+    }
     public static void main(String []args){
         Stack <Integer> s = new Stack<>();
         s.push(1);
@@ -38,5 +45,15 @@ public class questions {
         String str =  "hello";
         String result = reverseString(str);
         System.out.println(result);
+        //for reverse stack
+        Stack <Integer> st = new Stack<>();
+        st.push(1);
+        st.push(2);
+        st.push(3);
+
+        reverseStack(st);
+        while(!st.isEmpty()){
+            System.out.println(st.pop());
+        }
     }
 }
