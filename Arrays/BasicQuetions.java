@@ -29,6 +29,7 @@ public class BasicQuetions {
         System.out.println("Second smallest is " + secondMin);
         System.out.println("Second largest is " + secondMax);
 
+
     }
     public static int optimalFindElement(int arr[] , int n ){
         int max = Integer.MIN_VALUE;
@@ -119,6 +120,40 @@ public class BasicQuetions {
         }
         return union;
     }
+    public static void spiralMatrix(int matrix[][]){
+        int startRow = 0;
+        int startCol = 0;
+        int endRow = matrix.length-1;
+        int endCol = matrix[0].length-1;
+
+        while(startRow <= endRow && startCol <= endCol){
+            for(int j = startCol; j<= endCol; j++){
+                System.out.print(matrix[startRow][j]+ " ");
+            }
+            //for right traverse
+            for(int i = startRow+1; i< endRow; i++){
+                System.out.print(matrix[i][endCol]+ " ");
+            }
+            //bottom traverse
+            for(int j = endCol-1; j>= startCol; j--){
+                if(startRow == endRow){
+                    break;
+                }
+                System.out.print(matrix[endRow][j]+  " ");
+            }
+            // left side traverse
+            for(int i = endRow+1; i<= startRow-1; i--){
+                if(endCol == startCol){
+                    break;
+                }
+                System.out.print(matrix[i][startCol]+" ");
+            }
+            startRow++;
+            startCol++;
+            endRow--;
+            endCol--;
+        }
+    }
     public static void main(String[] args) {
 
         // Driver code
@@ -139,5 +174,18 @@ public class BasicQuetions {
         System.out.println(result);
 //        System.out.println("Union of arr1 and arr2 is: ");
 //        for (int val : result) System.out.print(val + " ");
+        int [][] matrix = {{1,2,3,4,5},
+                {6,7,8,9,10},
+                {11,12, 13,14,15},
+                {16,17,18,19,20},
+                {21,22,23,24,25}};
+
+        for(int i = 0; i< matrix.length; i++){
+            for(int j =0; j<matrix[0].length; j++){
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+        spiralMatrix(matrix);
     }
 }
